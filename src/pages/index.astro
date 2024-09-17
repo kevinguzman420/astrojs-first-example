@@ -1,16 +1,23 @@
 ---
+import Layout from "../components/Layout.astro";
+import User from "../components/User";
+import { getUsers } from "../utils/api.users.js";
 
+const users = await getUsers();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <div class="flex flex-wrap justify-between mt-[10px] bg-gray-200 rounded-xl ">
+    {
+      users.data?.map((user) => (
+        <a href={`/user/${user.id}`} class=" text-center w-[300px] h-[250px] ">
+          <h2 class=" font-bold">
+            {user.first_name} {user.last_name}
+          </h2>
+          <p>{user.email}</p>
+          <img class=" mx-auto mt-2 " src={user.avatar} alt="" />
+        </a>
+      ))
+    }
+  </div>
+</Layout>

@@ -1,0 +1,32 @@
+---
+export const prerender = false;
+
+import Layout from "../../components/Layout.astro";
+// import User from "../../components/User";
+import { getUserBy } from "../../utils/api.users.js";
+
+const { id } = Astro.params;
+
+const { data: user } = await getUserBy(id);
+---
+
+<Layout>
+  <div>
+    <!-- user card -->
+    <!-- <User client:load userId={id} /> -->
+    <div
+      class="flex justify-start items-center mt-[50px] p-4 w-[500px] h-[300px] border-2 bg-gray-200 rounded-xl"
+    >
+      <img class="w-[250px] h-auto rounded" src={user.avatar} alt="" />
+      <div class="ml-3">
+        <span>{user.id}</span>
+        <h3 class="text-xl font-bold">{user.first_name} {user.last_name}</h3>
+        <p>{user.email}</p>
+      </div>
+    </div>
+
+    <div class="mt-[30px]">
+      <a href="/" class="px-4 py-1 bg-gray-200 rounded"> {"<"} Volver </a>
+    </div>
+  </div>
+</Layout>
